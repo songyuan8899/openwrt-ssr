@@ -12,13 +12,12 @@ PKG_NAME:=openwrt-ssr
 PKG_VERSION:=1.2.1
 #PKG_RELEASE:=1
 
-PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
-PKG_SOURCE_URL:=https://github.com/ywb94/shadowsocks-libev
-PKG_SOURCE_VERSION:=11db1d5e48f539855ea1a66947eba9bb9bc82150
-
-PKG_SOURCE_PROTO:=git
-PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
-
+PKG_SOURCE:=shadowsocksR-libev-2.5.6.tar.gz
+PKG_SOURCE_URL:=https://github.com/shadowsocksr/shadowsocksr-libev.git
+PKG_SOURCE_PROTO:=git                                                                             
+PKG_SOURCE_VERSION:=44a8da40751671adda170d3902e98b5ff07705c7
+PKG_SOURCE_SUBDIR:=shadowsocksR-libev-2.5.6
+PKG_MAINTAINER:=breakwa11
 PKG_LICENSE:=GPLv3
 PKG_LICENSE_FILES:=LICENSE
 PKG_MAINTAINER:=yushi studio <ywb94@qq.com>
@@ -43,6 +42,7 @@ define Package/openwrt-ssr/Default
 	DEPENDS:=$(3)	
 	PKGARCH:=all
 endef
+
 
 
 Package/luci-app-shadowsocksR = $(call Package/openwrt-ssr/Default,openssl,(OpenSSL),+libopenssl +libpthread +ipset +ip +iptables-mod-tproxy +libpcre +zlib)
@@ -179,7 +179,6 @@ define Package/luci-app-shadowsocksR-Client/install
 	$(INSTALL_BIN) ./files/root/etc/uci-defaults/luci-shadowsocksr $(1)/etc/uci-defaults/luci-shadowsocksr
 	$(INSTALL_DIR) $(1)/usr/bin
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/src/ss-redir $(1)/usr/bin/ssr-redir
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/src/ss-tunnel $(1)/usr/bin/ssr-tunnel	
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/src/ss-local $(1)/usr/bin/ssr-local
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/src/ss-check $(1)/usr/bin/ssr-check
 	$(INSTALL_BIN) ./files/shadowsocksr.rule $(1)/usr/bin/ssr-rules
